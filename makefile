@@ -1,9 +1,9 @@
 CC = gcc
 CFLAGS = -Wall -Werror -Wvla -lpthread -ggdb3
 DEPS = main.h lab1_IO.h timer.h
-OBJ = main.o matrixgen.o lab1_IO.o
+OBJ = main.o lab1_IO.o
 
-main: main.o
+main: $(OBJ)
 	$(CC) -o $@ $^ $(CFLAGS)
 	
 .PHONY: matrixgen
