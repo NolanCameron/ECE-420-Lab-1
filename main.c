@@ -7,20 +7,38 @@
 
 int **A, **B, **C;
 int n;
-int numOfThreads;
+int p;
 
 void* calMatrixBlock(void* threads){
 
-}
+    int threadX = floor(thread / n);
+    int threadY = thread % n;
+    //ADD ERROR CHECKING
+    int blockWidth = n/sqrt(p);
+    int sum;
+
+    for(int i = 0; i < blockWidth; ++i){
+        for(int j = 0; j<blockWidth; ++j){
+            sum = 0;
+            for(int k = 0; k<n; ++k){
+                sum+=A[i+threadX*blockWidth][k]*B[k][j+threadY*blockWidth];
+            }
+
+            C[i+threadX*blockWidth][threadY*blockWidth] = sum;
+
+        }
+    }
+
+
 
 int main (int argc, char* argv[]){
 
+    p = atoi(argv[1]);
+    pthread_t* threadHandles = malloc(p*sizeof(pthread_t)); 
+    int numberOfBlocks = sqrt(p);
     double start;
     double end;
 
-    numOfThreads = atoi(argv[1]);
-
-    pthread_t* threadHandles = malloc(numOfThreads*sizeof(pthread_t)); 
     Lab1_loadinput(&A, &B, &n);
 
     C = (int **)malloc(n * sizeof(int*));
@@ -29,12 +47,12 @@ int main (int argc, char* argv[]){
     }
 
     GET_TIME(start)    //Start time
-    for (int thread = 0; thread < numOfThreads; thread++) {
+    for (int thread = 0; thread < p; thread++) {
         pthread_create(&threadHandles[thread], NULL, calMatrixBlock, (void*)thread);
     }
 
 
-    for (int thread = 0; thread < numOfThreads; thread++) {
+    for (int thread = 0; thread < p; thread++) {
         pthread_join(threadHandles[thread], NULL);
     }
     GET_TIME(end);    //End Time
