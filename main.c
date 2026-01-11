@@ -12,7 +12,7 @@ int p;
 
 void* calMatrixBlock(void* threadNum){
 
-    int thread = *(int*)threadNum;
+    int thread = (int)(intptr_t)threadNum;
 
     int threadX = floor(thread / n);
     int threadY = thread % n;

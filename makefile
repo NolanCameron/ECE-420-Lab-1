@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -Werror -Wvla -lpthread -ggdb3
+CFLAGS = -Wall -Werror -Wvla -lpthread -ggdb3 -lm
 DEPS = main.h lab1_IO.h timer.h
 OBJ = main.o lab1_IO.o
 
@@ -12,7 +12,7 @@ matrixgen: matrixgen.o
 
 .PHONY: memtest
 memtest: main
-	valgrind --tool=memcheck --leak-check=yes ./main
+	valgrind --tool=memcheck --leak-check=yes ./main 1
 
 .PHONY: threadtest
 threadtest: main
