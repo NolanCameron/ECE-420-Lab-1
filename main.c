@@ -2,6 +2,7 @@
 #include <pthread.h>
 #include <memory.h>
 #include <math.h>
+#include <stdint.h>
 #include "lab1_IO.h"
 #include "timer.h"
 
@@ -9,7 +10,9 @@ int **A, **B, **C;
 int n;
 int p;
 
-void* calMatrixBlock(void* threads){
+void* calMatrixBlock(void* threadNum){
+
+    int thread = *(int*)threadNum;
 
     int threadX = floor(thread / n);
     int threadY = thread % n;
@@ -29,13 +32,16 @@ void* calMatrixBlock(void* threads){
         }
     }
 
+    return 0;
+
+}
 
 
 int main (int argc, char* argv[]){
 
     p = atoi(argv[1]);
     pthread_t* threadHandles = malloc(p*sizeof(pthread_t)); 
-    int numberOfBlocks = sqrt(p);
+
     double start;
     double end;
 
@@ -48,7 +54,7 @@ int main (int argc, char* argv[]){
 
     GET_TIME(start)    //Start time
     for (int thread = 0; thread < p; thread++) {
-        pthread_create(&threadHandles[thread], NULL, calMatrixBlock, (void*)thread);
+        pthread_create(&threadHandles[thread], NULL, calMatrixBlock, (void*)(intptr_t) thread);
     }
 
 
