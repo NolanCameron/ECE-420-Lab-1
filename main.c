@@ -18,7 +18,7 @@ void* calMatrixBlock(void* threadNum){
     int threadY = thread % n;
     //ADD ERROR CHECKING
     int blockWidth = n/sqrt(p);
-    int sum;
+    int sum = 0;
 
     for(int i = 0; i < blockWidth; ++i){
         for(int j = 0; j<blockWidth; ++j){
@@ -27,7 +27,7 @@ void* calMatrixBlock(void* threadNum){
                 sum+=A[i+threadX*blockWidth][k]*B[k][j+threadY*blockWidth];
             }
 
-            C[i+threadX*blockWidth][threadY*blockWidth] = sum;
+            C[i+threadX*blockWidth][j + threadY*blockWidth] = sum;
 
         }
     }
