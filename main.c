@@ -14,8 +14,9 @@ void* calMatrixBlock(void* threadNum){
 
     int thread = (int)(intptr_t)threadNum;
 
-    int threadX = floor(thread / n);
-    int threadY = thread % n;
+    //P_{xy}
+    int threadY = floor(thread / sqrt(p));
+    int threadX = thread % (int)sqrt(p);
     //ADD ERROR CHECKING
     int blockWidth = n/sqrt(p);
     int sum = 0;
@@ -69,6 +70,8 @@ int main (int argc, char* argv[]){
         free(C[i]);
     }
     free(C);
+
+    free(threadHandles);
 
     return 0;
 

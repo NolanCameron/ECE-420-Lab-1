@@ -12,11 +12,11 @@ matrixgen: matrixgen.o
 
 .PHONY: memtest
 memtest: main
-	valgrind --tool=memcheck --leak-check=yes ./main 1
+	valgrind --tool=memcheck --leak-check=yes ./main 4
 
 .PHONY: threadtest
 threadtest: main
-	valgrind --tool=helgrind ./main
+	valgrind --tool=helgrind ./main 4
 
 .PHONY: clean
 clean:
