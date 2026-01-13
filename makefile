@@ -20,4 +20,4 @@ threadtest: main
 
 .PHONY: clean
 clean:
-	rm -f *.o main matrixgen
+	rm -f *.o main matrixgen serial* diff*
