@@ -20,4 +20,4 @@ threadtest: main
 
 .PHONY: clean
 clean:
-	rm -f *.o main matrixgen data_input
+	rm -f *.o main matrixgen
